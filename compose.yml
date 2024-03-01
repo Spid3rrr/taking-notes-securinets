@@ -1,0 +1,26 @@
+
+services:
+  server:
+    build: ./server
+    depends_on:
+      - redis
+    ports:
+      - "9999:3000"
+    networks:
+      - default
+  client:
+    build: ./client
+    ports:
+      - "8888:4173"
+    depends_on:
+      - server
+    networks:
+      - default
+  redis:
+    image: redis/redis-stack-server
+    networks:
+      - default
+
+networks:
+  default:
+    driver: bridge
